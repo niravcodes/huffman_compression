@@ -1,14 +1,16 @@
 #include "param_parser.h"
+#include "help.h"
+#include "sys/stat.h"
 using namespace std;
-parameter parse_options(unsigned char argc, char *argv[])
+input_param parse_options(unsigned char argc, char *argv[])
 {
     if (argc == 1)
     { //invalid
-        return {"", "", 0, true};
+        return {"", "", 0, true, 0};
     }
     else
     {
-        parameter options = {"", "a.out", true, false}; //default params
+        input_param options = {"", "a.out", true, false, false}; //default params
         for (unsigned i = 1; i <= argc; ++i)
         {
             if (argv[i] == string("-o"))
@@ -16,7 +18,7 @@ parameter parse_options(unsigned char argc, char *argv[])
                 if ((i + 1) < argc) //make sure array bounds not exceeded
                     options.output_file = argv[++i];
                 else //invalid
-                    return {"", "", 0, true};
+                    return {"", "", 0, true, 0};
             }
             else if (argv[i] == string("-d"))
                 options.encode = false;
@@ -26,6 +28,31 @@ parameter parse_options(unsigned char argc, char *argv[])
                 break;
             }
         }
+
+        //check if input file exists
+        struct stat file_info;
+        if (stat(options.input_file.c_str(), &file_info) == 0)
+        {
+            options.input_file_size = file_info.st_size;
+        }
+
+        //return the parsed options
         return options;
     }
+}
+
+bool show_help_if_option_invalid(input_param options)
+{
+    if (options.invalid)
+    {
+        print_help();
+        return true;
+    }
+    if (options.input_file_size == 0)
+    {
+        print_help("Input file doesn't exist.");
+        print_help();
+        return true;
+    }
+    return false;
 }
