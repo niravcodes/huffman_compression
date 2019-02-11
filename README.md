@@ -1,11 +1,11 @@
 # huffman_compression
 The implementation of the Huffman algorithm as a command line utility.
 
-Usage: huff [options] input_file
+Usage: huff [options] input_file\
 
-Options:
-    -o output_file      : Mention the output file. By default a.out
-    -d                  : Decompress instead of compress
+Options:\
+    -o output_file      : Mention the output file. By default a.out\
+    -d                  : Decompress instead of compress\
 
 ## Building
 
@@ -33,4 +33,4 @@ make it robust and dependable. But as of now, it is just an experiment.
 2. Try to mix with some other simple compression algorithm like RLE and compare efficiency.
 3. Try various approaches to decoding Huffman
 
-More on (nirav.com.np)[https://nirav.com.np]
+More on [nirav.com.np](https://nirav.com.np)
