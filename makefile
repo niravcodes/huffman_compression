@@ -5,4 +5,4 @@ all:
 	g++ -c corelib/huffman.C -o .huffman
 	g++ -c corelib/tree.C -o .tree
 	g++ -c corelib/priority_queue.C -o .priority_queue
-	g++ .help .entrance .param_parser .huffman -o huff
+	g++ .help .entrance .param_parser .huffman .tree .priority_queue -o huff
