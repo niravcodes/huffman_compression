@@ -1,7 +1,6 @@
 #include <iostream> //for debug only
 #include <fstream>
 
-#include "param_parser.h"
 #include "huffman.h"
 
 using namespace std;

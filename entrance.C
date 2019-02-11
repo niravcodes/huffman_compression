@@ -5,7 +5,7 @@
 
 #include "param_parser.h"
 #include "help.h"
-#include "huffman.h"
+#include "corelib/huffman.h"
 
 using namespace std;
 
