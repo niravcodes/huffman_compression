@@ -31,8 +31,10 @@ priority_queue *generate_alphabets(unsigned *count)
         debug_count += count[i];
         tree::node x(i, count[i], NULL, NULL);
         cout << x << "^" << endl;
+
         q->enqueue(x);
     }
+    cout << q->element_count() << ":elements in pq" << endl;
     return q;
 }
 void huffman(input_param options)
@@ -45,6 +47,7 @@ void huffman(input_param options)
     priority_queue *x = generate_alphabets(count);
 
     int cnt = 0;
+    cout << x->element_count() << ":elements in pq" << endl;
     cout << "----------start log printing------------" << endl;
     while (x->element_count() > 1)
     {

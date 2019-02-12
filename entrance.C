@@ -19,4 +19,5 @@ int main(int argc, char *argv[])
 	}
 
 	huffman(options);
+	return 0;
 }

@@ -29,15 +29,33 @@ void sorting_test()
 void rand_queue_dequeue()
 {
     cout << "Random queue dequeue test" << endl;
-    priority_queue q;
-    tree::node m(1, 8, NULL, NULL);
-    q.enqueue(m);
-    tree::node m(1, 8, NULL, NULL);
-    q.enqueue(m);
+    //priority_queue q;
+    //tree::node m(1, 8, NULL, NULL);
+    //q.enqueue(m);
+    //tree::node m(1, 8, NULL, NULL);
+    //q.enqueue(m);
     //todo who even likes sad tests. :3 whatevers dude
+}
+void dequeue256()
+{
+    cout << "Testing if dequeue pops all 256 items" << endl;
+    priority_queue q;
+    tree::node x(2, 2, 0, 0);
+    for (int i = 0; i < 256; i++)
+    {
+        q.enqueue(x);
+    }
+
+    while (!q.is_empty())
+    {
+        cout << q.dequeue()
+             << endl;
+    }
 }
 int main()
 {
     cout << "Testing priority queue" << endl;
-    sorting_test();
+    // sorting_test();
+    cout << "===============" << endl;
+    dequeue256();
 }

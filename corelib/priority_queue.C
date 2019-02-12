@@ -11,8 +11,6 @@ priority_queue::~priority_queue()
 }
 void priority_queue::enqueue(tree::node &lf)
 {
-    if (top == 255)
-        return;
     alphabets[top++] = lf;
 }
 tree::node priority_queue::dequeue()
