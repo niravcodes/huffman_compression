@@ -4,37 +4,23 @@
 tree::node::node()
 {
   node(0, 0, _NULL, _NULL);
-  null = true;
-}
-bool tree::node::is_null()
-{
-  return null;
-}
-void tree::node::make_null()
-{
-  null = true;
 }
 tree::node::node(unsigned char data, unsigned frequency, tree::node *left = _NULL, tree::node *right = _NULL)
 {
   this->data = data;
   this->frequency = frequency;
-  tree::node::add_left(left);
-  tree::node::add_right(right);
-  null = false;
+  add_leaves(_NULL, _NULL);
 }
-bool tree::node::add_left(tree::node *lf)
+bool tree::node::add_leaves(tree::node *lf, tree::node *rg)
 {
-  if (is_null())
-    return false;
   left = lf;
-  return true;
+  right = rg;
 }
-bool tree::node::add_right(tree::node *lf)
+bool tree::node::is_leaf()
 {
-  if (is_null())
-    return false;
-  right = lf;
-  return true;
+  if (left == _NULL and right == _NULL)
+    return true;
+  return false;
 }
 bool tree::node::operator<(const tree::node &b)
 {
@@ -54,7 +40,14 @@ std::ostream &operator<<(std::ostream &os, const tree::node &m)
 {
   return os << (unsigned)m.get_data() << "\t\t" << m.get_frequency();
 }
-
+tree::node *tree::node::get_right()
+{
+  return right;
+}
+tree::node *tree::node::get_left()
+{
+  return left;
+}
 tree::tree()
 {
   root = _NULL;

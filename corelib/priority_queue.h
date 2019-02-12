@@ -12,6 +12,7 @@ public:
   ~priority_queue();
   bool is_empty();
   void enqueue(tree::node &);
+  unsigned element_count();
   tree::node dequeue();
 };
 #endif

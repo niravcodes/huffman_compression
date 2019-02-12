@@ -13,7 +13,6 @@ public:
     unsigned frequency;
     node *left;
     node *right;
-    bool null; // Null is the mechanism to invalidate a leaf
 
   public:
     node();
@@ -21,10 +20,12 @@ public:
     bool operator<(const node &b);
     bool add_left(node *);
     bool add_right(node *);
+    bool add_leaves(node *, node *);
+    node *get_left();
+    node *get_right();
+    bool is_leaf();
     unsigned char get_data() const;
     unsigned get_frequency() const;
-    bool is_null();
-    void make_null();
   };
 
   tree();

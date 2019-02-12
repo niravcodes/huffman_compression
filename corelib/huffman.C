@@ -41,11 +41,17 @@ void huffman(input_param options)
     priority_queue *x = generate_alphabets(count);
 
     int cnt = 0;
-    while (!x->is_empty())
+    while (x->element_count() > 1)
     {
-        tree::node a = x->dequeue();
-        cout << cnt++ << "\t\t" << x->dequeue() << endl;
+        tree::node b1 = x->dequeue();
+        tree::node b2 = x->dequeue();
+
+        tree::node *a = new tree::node(b1.get_data(), b1.get_frequency(), b1.get_left(), b1.get_right()); //todo:copy constructor
+        tree::node *b = new tree::node(b2.get_data(), b2.get_frequency(), b2.get_left(), b2.get_right()); //todo:copy constructor
+        tree::node c(0, a->get_frequency() + b->get_frequency(), a, b);
+        x->enqueue(c);
     }
+    cout << x->dequeue() << endl;
 }
 
 /*

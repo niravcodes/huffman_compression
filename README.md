@@ -8,11 +8,12 @@ Options:
     -o output_file      : Mention the output file. By default a.out  
     -d                  : Decompress instead of compress  
 
-## Source Directory structure
+## Source Directory Structure
 The main directory contains all the "fluff" code. It's the interface that the end user
 interacts with. The main libraries are found in `corelib` folder. It contains all the data 
-structures and algorithms needed to implement Huffman. Notice that the data structures were
-in the STL. That's deliberate, as this is foremost a learning endeavour.
+structures and algorithms needed to implement Huffman. 
+You might find that the data structures I implemented were already in STL. 
+I rewrote them anyway because this is supposed to be somewhat educational for me (and also because its fun).
 
 ## Building
 Build with
@@ -21,11 +22,17 @@ Build with
 
 The program "huff" should appear.
 
+To compile test programs for the core libraries, you can 
+
+    make test
+
+The test programs should compile to `tests/` directory
+
 ## File structure
 The first 12 bytes of the output file are the file signature. 
-By default it's the character sequence "nirav.com.np". After that 4 bytes
+By default it's the character sequence "nirav.com.np" (because, why not? :D). After that 4 bytes
 store the length of huffman table in little endian. After that everything is the 
-compressed file.
+compressed data.
 
 ## Caveats
 Not ready to be used in anything remotely serious so far. At some point I intend to 
@@ -35,5 +42,8 @@ make it robust and dependable. But as of now, it is just an experiment.
 1. Compress folders
 2. Try to mix with some other simple compression algorithm like RLE and compare efficiency.
 3. Try various approaches to decoding Huffman
+
+## Progess
+This project is (as of Feb 12, 2019) not complete. I intend to finish it by the end of this month.
 
 More on [nirav.com.np](https://nirav.com.np)

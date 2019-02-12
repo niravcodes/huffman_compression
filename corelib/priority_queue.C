@@ -39,3 +39,7 @@ bool priority_queue::is_empty()
 {
     return !top;
 }
+unsigned priority_queue::element_count()
+{
+    return top;
+}
