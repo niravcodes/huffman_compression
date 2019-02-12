@@ -5,7 +5,7 @@ class priority_queue
 {
 private:
   tree::node *alphabets;
-  unsigned char top;
+  unsigned top;
 
 public:
   priority_queue();

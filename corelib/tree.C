@@ -9,14 +9,14 @@ tree::node::node(unsigned char data, unsigned frequency, tree::node *left = _NUL
 {
   this->data = data;
   this->frequency = frequency;
-  add_leaves(_NULL, _NULL);
+  add_leaves(left, right);
 }
 bool tree::node::add_leaves(tree::node *lf, tree::node *rg)
 {
   left = lf;
   right = rg;
 }
-bool tree::node::is_leaf()
+bool tree::node::is_leaf() const
 {
   if (left == _NULL and right == _NULL)
     return true;
@@ -38,7 +38,8 @@ unsigned tree::node::get_frequency() const
 }
 std::ostream &operator<<(std::ostream &os, const tree::node &m)
 {
-  return os << (unsigned)m.get_data() << "\t\t" << m.get_frequency();
+  char a = m.is_leaf() ? '*' : '-';
+  return os << (unsigned)m.get_data() << "\t\t" << m.get_frequency() << a;
 }
 tree::node *tree::node::get_right()
 {

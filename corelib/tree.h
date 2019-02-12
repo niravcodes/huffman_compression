@@ -23,7 +23,7 @@ public:
     bool add_leaves(node *, node *);
     node *get_left();
     node *get_right();
-    bool is_leaf();
+    bool is_leaf() const;
     unsigned char get_data() const;
     unsigned get_frequency() const;
   };

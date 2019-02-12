@@ -22,7 +22,7 @@ tree::node priority_queue::dequeue()
     if (top == 1)
         return alphabets[--top];
 
-    unsigned char index = 0;
+    unsigned index = 0;
     tree::node smallest = alphabets[index];
     for (int i = 0; i < top; i++)
     {
