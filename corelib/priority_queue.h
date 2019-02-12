@@ -3,10 +3,14 @@
 #include "tree.h"
 class priority_queue
 {
-  private:
-  public:
-    bool is_empty();
-    void enqueue(tree::leaf);
-    tree::leaf dequeue();
+private:
+  tree::leaf *alphabets;
+  unsigned char top;
+
+public:
+  priority_queue();
+  bool is_empty();
+  void enqueue(tree::leaf &);
+  tree::leaf dequeue();
 };
 #endif

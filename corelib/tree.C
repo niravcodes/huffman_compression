@@ -4,7 +4,7 @@ tree::leaf::leaf()
 {
   leaf(0, 0, 0, 0);
 }
-tree::leaf::leaf(unsigned char data, unsigned frequency, tree::leaf *left = NULL, tree::leaf *right = NULL)
+tree::leaf::leaf(unsigned char data, unsigned frequency, tree::leaf *left = _NULL, tree::leaf *right = _NULL)
 {
   this->data = data;
   this->frequency = frequency;
@@ -36,7 +36,7 @@ unsigned tree::leaf::get_frequency()
 
 tree::tree()
 {
-  root = NULL;
+  root = _NULL;
 }
 tree::tree(tree::leaf *r)
 {
