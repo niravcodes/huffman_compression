@@ -1,33 +1,38 @@
 #ifndef _TREE_H
 #define _TREE_H
-
+#include <ostream>
 #define _NULL 0
 
 class tree
 {
 public:
-  class leaf
+  class node
   {
   private:
     unsigned char data;
     unsigned frequency;
-    leaf *left;
-    leaf *right;
+    node *left;
+    node *right;
+    bool null; // Null is the mechanism to invalidate a leaf
 
   public:
-    leaf();
-    leaf(unsigned char, unsigned, leaf *left, leaf *right);
-    bool operator<(const leaf &b);
-    bool add_left(leaf *);
-    bool add_right(leaf *);
-    unsigned char get_data();
-    unsigned get_frequency();
+    node();
+    node(unsigned char, unsigned, node *left, node *right);
+    bool operator<(const node &b);
+    bool add_left(node *);
+    bool add_right(node *);
+    unsigned char get_data() const;
+    unsigned get_frequency() const;
+    bool is_null();
+    void make_null();
   };
 
   tree();
-  tree(leaf *);
+  tree(node *);
 
 private:
-  leaf *root;
+  node *root;
 };
+
+std::ostream &operator<<(std::ostream &os, const tree::node &m); //for debug purpose only
 #endif

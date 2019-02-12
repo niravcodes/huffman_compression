@@ -4,13 +4,14 @@
 class priority_queue
 {
 private:
-  tree::leaf *alphabets;
+  tree::node *alphabets;
   unsigned char top;
 
 public:
   priority_queue();
+  ~priority_queue();
   bool is_empty();
-  void enqueue(tree::leaf &);
-  tree::leaf dequeue();
+  void enqueue(tree::node &);
+  tree::node dequeue();
 };
 #endif

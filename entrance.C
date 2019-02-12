@@ -17,4 +17,6 @@ int main(int argc, char *argv[])
 		// The options were stupid enough to warrant a full exit
 		return 1;
 	}
+
+	huffman(options);
 }

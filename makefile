@@ -1,6 +1,6 @@
 .PHONY : all _build_for_test
 
-all:
+all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C corelib/priority_queue.C
 	@echo
 	@echo "Building normal programs"
 	g++ -c help.C -o .help
@@ -13,7 +13,7 @@ all:
 
 test:	all _build_for_test
 
-_build_for_test:
+_build_for_test: tests/priority_queue.C
 	@echo
 	@echo
 	@echo "Building test programs"

@@ -2,28 +2,38 @@
 
 priority_queue::priority_queue()
 {
-    alphabets = new tree::leaf[256];
+    alphabets = new tree::node[256];
     top = 0;
 }
-void priority_queue::enqueue(tree::leaf &lf)
+priority_queue::~priority_queue()
+{
+    delete[] alphabets;
+}
+void priority_queue::enqueue(tree::node &lf)
 {
     if (top == 255)
         return;
     alphabets[top++] = lf;
 }
-tree::leaf priority_queue::dequeue()
+tree::node priority_queue::dequeue()
 {
+    if (is_empty())
+        return tree::node(); //return empty node if nothing
+    if (top == 1)
+        return alphabets[--top];
+
     unsigned char index = 0;
-    tree::leaf greatest = alphabets[index];
+    tree::node smallest = alphabets[index];
     for (int i = 0; i < top; i++)
     {
-        if (greatest < alphabets[i])
+        if (alphabets[i] < smallest)
         {
-            greatest = alphabets[i];
+            smallest = alphabets[i];
             index = i;
         }
     }
     alphabets[index] = alphabets[--top];
+    return smallest;
 }
 bool priority_queue::is_empty()
 {
