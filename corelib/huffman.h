@@ -3,6 +3,6 @@
 #include "../param_parser.h"
 #include "tree.h"
 
-tree *huffman(input_param);
+tree *make_huffman_tree(input_param);
 
 #endif

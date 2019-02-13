@@ -19,6 +19,6 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	print_tree(huffman(options));
+	print_tree(make_huffman_tree(options));
 	return 0;
 }
