@@ -18,7 +18,7 @@ public:
     node();
     node(unsigned char, unsigned,
          node *left, node *right);
-    node(const node &m);
+    // node(const node &m);
     bool operator<(const node &b);
     bool add_left(node *);
     bool add_right(node *);

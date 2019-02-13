@@ -11,11 +11,11 @@ tree::node::node(unsigned char data, unsigned frequency, tree::node *left = _NUL
   this->frequency = frequency;
   add_leaves(left, right);
 }
-tree::node::node(const tree::node &m)
-{
-  node(m.get_data(), m.get_frequency(),
-       m.get_left(), m.get_right());
-}
+// tree::node::node(const tree::node &m)
+// {
+//   node(m.get_data(), m.get_frequency(),
+//        m.get_left(), m.get_right());
+// }
 bool tree::node::add_leaves(tree::node *lf, tree::node *rg)
 {
   left = lf;

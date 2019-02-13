@@ -73,6 +73,7 @@ tree *huffman(input_param options)
     cout << "starting expreiment" << endl;
     do
     {
+        cout << "fuck1" << endl;
         temp = *temp.get_right();
         cout << temp << endl;
     } while (!temp.get_right()->is_leaf());
