@@ -16,7 +16,7 @@ structures and algorithms needed to implement Huffman.
 You might notice that the data structures I implemented were already there in the STL. 
 I rewrote them anyway because this is supposed to be somewhat educational for me and 
 of course, the the whole reason I code is to be able to say stuff like "Yeah, I implemented the 
-priority queue but didn't use heap because of I don't like writing tree traversal algorithms."
+priority queue but didn't use heap because I don't like writing tree traversal algorithms."
 
 
 ## Building

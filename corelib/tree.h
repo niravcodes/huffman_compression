@@ -16,13 +16,15 @@ public:
 
   public:
     node();
-    node(unsigned char, unsigned, node *left, node *right);
+    node(unsigned char, unsigned,
+         node *left, node *right);
+    node(const node &m);
     bool operator<(const node &b);
     bool add_left(node *);
     bool add_right(node *);
     bool add_leaves(node *, node *);
-    node *get_left();
-    node *get_right();
+    node *get_left() const;
+    node *get_right() const;
     bool is_leaf() const;
     unsigned char get_data() const;
     unsigned get_frequency() const;
@@ -30,6 +32,7 @@ public:
 
   tree();
   tree(node *);
+  node *get_root();
 
 private:
   node *root;

@@ -6,6 +6,7 @@
 #include "param_parser.h"
 #include "help.h"
 #include "corelib/huffman.h"
+#include "corelib/tree_printer.h"
 
 using namespace std;
 
@@ -18,6 +19,6 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	huffman(options);
+	print_tree(huffman(options));
 	return 0;
 }
