@@ -17,6 +17,18 @@ tree::node::node(const tree::node &m)
   frequency = m.frequency;
   add_leaves(m.get_left(), m.get_right());
 }
+void tree::node::delete_subtree()
+{
+  if (!is_leaf())
+  {
+    left->delete_subtree();
+    right->delete_subtree();
+  }
+  delete left;
+  delete right;
+  left = _NULL;
+  right = _NULL;
+}
 tree::node &tree::node::operator=(const tree::node &m)
 {
   data = m.data;
@@ -73,4 +85,10 @@ tree::tree(tree::node *r)
 tree::node *tree::get_root()
 {
   return root;
+}
+tree::~tree()
+{
+  root->get_left()->delete_subtree();
+  root->get_right()->delete_subtree();
+  delete root;
 }

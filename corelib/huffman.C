@@ -39,21 +39,23 @@ tree *make_huffman_tree(input_param options)
 
     unsigned *count = count_frequency(in_file, options.input_file_size);
     priority_queue *x = generate_alphabets(count);
+    delete[] count;
 
     int cnt = 0;
+    tree::node *a, *b, element, c;
     while (x->element_count() > 1)
     {
-        tree::node b1 = x->dequeue();
-        tree::node b2 = x->dequeue();
-        tree::node *a = new tree::node(b1);
-        tree::node *b = new tree::node(b2);
-        tree::node c(0, a->get_frequency() + b->get_frequency(), a, b);
+        element = x->dequeue();
+        a = new tree::node(element);
+        element = x->dequeue();
+        b = new tree::node(element);
+        c = tree::node(0, a->get_frequency() + b->get_frequency(), a, b);
         x->enqueue(c);
     }
 
-    tree::node temp = x->dequeue();
-    tree::node temp2 = temp;
-    tree::node *root = new tree::node(temp);
+    //there is only one element in the priority queue now: The root.
+    element = x->dequeue();
+    tree::node *root = new tree::node(element);
     tree *huffman_tree = new tree(root);
 
     in_file.close();

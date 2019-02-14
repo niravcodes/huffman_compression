@@ -11,11 +11,14 @@ void print_tree(T *tree)
     }
     else
     {
-        T *x = new T(tree->get_root()->get_right());
-        T *y = new T(tree->get_root()->get_left());
-        cout << "|" << endl;
+        T *x = new T(tree->get_root()->get_left());
+        T *y = new T(tree->get_root()->get_right());
+        cout << "|";
         print_tree(x);
-        cout << "--" << endl;
+        cout << endl;
+        cout << "---------------------------------------------|";
         print_tree(y);
+        cout << endl;
     }
+    cout << endl;
 }
