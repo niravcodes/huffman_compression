@@ -7,6 +7,26 @@
 
 using namespace std;
 
+huffman_code::huffman_code()
+{
+    code = 0;
+    size = 0;
+}
+void huffman_code::add_left()
+{
+    code = code << 1;
+    size++;
+}
+void huffman_code::add_right()
+{
+    code = code << 1 | 1;
+    size++;
+}
+huffman_code::hcode huffman_code::get_code()
+{
+    return {code, size};
+}
+
 unsigned *count_frequency(ifstream &in, unsigned file_size)
 {
     char byte;
@@ -66,11 +86,36 @@ tree *make_huffman_tree(input_param options)
 //in a queue (why not stack? cuz i alread had half a queue)
 //once the leftmost leaf is reached, add it to the code-table
 //then access the queue. Anytime a queue is consulted, a 1 is added to the code bit pattern
+//convention : left is 0;
 unsigned *generate_code(tree *t)
 {
     unsigned *code = new unsigned[256];
 
-    tree::node current = t->get_root();
+    tree::node *current = t->get_root();
+    tree::node temp;
+    queue q;
+    unsigned huff_code;
 
+    while (1)
+    {
+        if (current->is_leaf())
+        {
+            code[current->get_data()] = huff_code;
+            if (q.is_empty())
+            {
+                break;
+            }
+            else
+            {
+                temp = q.dequeue();
+                current = &temp;
+            }
+        }
+        else
+        {
+            q.enqueue(*current->get_right());
+            current = current->get_left();
+        }
+    }
     return code;
 }
