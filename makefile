@@ -1,6 +1,6 @@
 .PHONY : all _build_for_test
 
-all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C corelib/priority_queue.C
+all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C 
 	@echo
 	@echo "Building normal programs"
 	g++ -c help.C -o .help
@@ -8,8 +8,7 @@ all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C corelib/p
 	g++ -c param_parser.C -o .param_parser
 	g++ -c corelib/huffman.C -o .huffman
 	g++ -c corelib/tree.C -o .tree
-	g++ -c corelib/priority_queue.C -o .priority_queue
-	g++ .help .entrance .param_parser .huffman .tree .priority_queue -o huff
+	g++ .help .entrance .param_parser .huffman .tree -o huff
 
 test:	all _build_for_test
 
@@ -19,8 +18,8 @@ _build_for_test: tests/priority_queue.C tests/queue.C
 	@echo "Building test programs"
 	g++ -c tests/priority_queue.C -o tests/.priority_queue
 	g++ -c tests/queue.C -o tests/.queue
-	g++ tests/.priority_queue .tree .priority_queue -o tests/priority_queue
-	g++ tests/.queue .tree .priority_queue -o tests/queue
+	g++ tests/.priority_queue .tree -o tests/priority_queue
+	g++ tests/.queue .tree -o tests/queue
 
 runtestpq:
 	@echo

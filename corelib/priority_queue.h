@@ -3,21 +3,25 @@
 #include "tree.h"
 
 #define QUEUE_MAXSIZE 256
+
+template <class T>
 class priority_queue
 {
 protected:
-  tree::node *alphabets;
+  T *alphabets;
   unsigned top;
 
 public:
   priority_queue();
   ~priority_queue();
   bool is_empty();
-  void enqueue(tree::node &);
+  void enqueue(T &);
   unsigned element_count();
-  tree::node dequeue();
+  T dequeue();
 };
-class queue : public priority_queue
+
+template <class T>
+class queue : public priority_queue<T>
 {
 protected:
   unsigned bottom;
@@ -25,7 +29,8 @@ protected:
 public:
   queue();
   bool is_empty();
-  tree::node dequeue();
-  void enqueue(tree::node &);
+  T dequeue();
+  void enqueue(T &);
 };
+#include "priority_queue.T"
 #endif

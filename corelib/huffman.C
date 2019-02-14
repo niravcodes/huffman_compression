@@ -41,9 +41,9 @@ unsigned *count_frequency(ifstream &in, unsigned file_size)
     }
     return count;
 }
-priority_queue *generate_alphabets(unsigned *count)
+priority_queue<tree::node> *generate_alphabets(unsigned *count)
 {
-    priority_queue *q = new priority_queue;
+    priority_queue<tree::node> *q = new priority_queue<tree::node>;
     for (int i = 0; i < 256; i++)
     {
         tree::node x(i, count[i], NULL, NULL);
@@ -58,7 +58,7 @@ tree *make_huffman_tree(input_param options)
     in_file.open(options.input_file, ios::binary | ios::in);
 
     unsigned *count = count_frequency(in_file, options.input_file_size);
-    priority_queue *x = generate_alphabets(count);
+    priority_queue<tree::node> *x = generate_alphabets(count);
     delete[] count;
 
     int cnt = 0;
@@ -93,7 +93,8 @@ unsigned *generate_code(tree *t)
 
     tree::node *current = t->get_root();
     tree::node temp;
-    queue q;
+    queue<tree::node> q;
+    queue<huffman_code> hq;
     unsigned huff_code;
 
     while (1)
