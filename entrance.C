@@ -19,8 +19,15 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	tree *huffman = make_huffman_tree(options);
-	print_tree(huffman);
-	delete huffman;
+	tree *huffman_tree = make_huffman_tree(options);
+	huffman_code *huff_code = generate_code(huffman_tree);
+
+	for (int i = 0; i < 256; i++)
+	{
+		cout << huff_code[i] << endl;
+	}
+
+	delete huffman_tree;
+	delete huff_code;
 	return 0;
 }

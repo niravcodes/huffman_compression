@@ -22,9 +22,17 @@ void huffman_code::add_right()
     code = code << 1 | 1;
     size++;
 }
-huffman_code::hcode huffman_code::get_code()
+unsigned huffman_code::get_code() const
 {
-    return {code, size};
+    return code;
+}
+unsigned huffman_code::get_size() const
+{
+    return size;
+}
+std::ostream &operator<<(std::ostream &os, const huffman_code &m)
+{
+    return os << (unsigned)m.get_code() << "\t\t" << m.get_size();
 }
 
 unsigned *count_frequency(ifstream &in, unsigned file_size)
@@ -87,35 +95,40 @@ tree *make_huffman_tree(input_param options)
 //once the leftmost leaf is reached, add it to the code-table
 //then access the queue. Anytime a queue is consulted, a 1 is added to the code bit pattern
 //convention : left is 0;
-unsigned *generate_code(tree *t)
+huffman_code *generate_code(tree *t)
 {
-    unsigned *code = new unsigned[256];
+    huffman_code *code = new huffman_code[256];
 
     tree::node *current = t->get_root();
-    tree::node temp;
+    huffman_code current_huff_code;
+    tree::node temp_node;
+
     queue<tree::node> q;
     queue<huffman_code> hq;
-    unsigned huff_code;
 
     while (1)
     {
         if (current->is_leaf())
         {
-            code[current->get_data()] = huff_code;
+            code[current->get_data()] = current_huff_code;
             if (q.is_empty())
             {
                 break;
             }
             else
             {
-                temp = q.dequeue();
-                current = &temp;
+                temp_node = q.dequeue();
+                current = &temp_node;
+                current_huff_code = hq.dequeue();
+                current_huff_code.add_right();
             }
         }
         else
         {
             q.enqueue(*current->get_right());
+            hq.enqueue(current_huff_code);
             current = current->get_left();
+            current_huff_code.add_left();
         }
     }
     return code;

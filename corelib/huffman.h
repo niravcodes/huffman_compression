@@ -5,23 +5,20 @@
 
 class huffman_code
 {
-  private:
-    unsigned code;
-    unsigned size;
+private:
+  unsigned code;
+  unsigned size;
 
-  public:
-    struct hcode
-    {
-        unsigned code;
-        unsigned size;
-    };
-    huffman_code();
-    void add_left();
-    void add_right();
-    hcode get_code();
+public:
+  huffman_code();
+  void add_left();
+  void add_right();
+  unsigned get_code() const;
+  unsigned get_size() const;
 };
+std::ostream &operator<<(std::ostream &os, const huffman_code &m); //for debug purpose only
 
 tree *make_huffman_tree(input_param);
-unsigned *generate_code(tree *);
+huffman_code *generate_code(tree *);
 
 #endif
