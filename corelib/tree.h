@@ -20,7 +20,6 @@ public:
          node *left, node *right);
     node(const node &m);
     void delete_subtree();
-    // ~node();
     node &operator=(const node &m);
     bool operator<(const node &b);
     bool add_left(node *);

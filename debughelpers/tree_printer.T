@@ -2,6 +2,8 @@
 #include <iostream>
 using namespace std;
 
+string display[500];
+
 template <class T>
 void print_tree(T *tree)
 {
@@ -21,4 +23,11 @@ void print_tree(T *tree)
         cout << endl;
     }
     cout << endl;
+}
+
+void print_subtree(tree::node n, int indent)
+{
+    if (n.is_leaf())
+    {
+    }
 }

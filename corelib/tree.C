@@ -64,7 +64,7 @@ unsigned tree::node::get_frequency() const
 std::ostream &operator<<(std::ostream &os, const tree::node &m)
 {
   char a = m.is_leaf() ? '*' : '-';
-  return os << (unsigned)m.get_data() << "\t\t" << m.get_frequency() << a;
+  return os << (unsigned)m.get_data() << "\t\t\t\t\t\t\t" << m.get_frequency() << a;
 }
 tree::node *tree::node::get_right() const
 {
