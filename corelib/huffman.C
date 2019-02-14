@@ -59,6 +59,18 @@ tree *make_huffman_tree(input_param options)
     tree *huffman_tree = new tree(root);
 
     in_file.close();
-
     return huffman_tree;
+}
+
+//the idea is to keep on following left-ward nodes while putting the right-ward nodes
+//in a queue (why not stack? cuz i alread had half a queue)
+//once the leftmost leaf is reached, add it to the code-table
+//then access the queue. Anytime a queue is consulted, a 1 is added to the code bit pattern
+unsigned *generate_code(tree *t)
+{
+    unsigned *code = new unsigned[256];
+
+    tree::node current = t->get_root();
+
+    return code;
 }

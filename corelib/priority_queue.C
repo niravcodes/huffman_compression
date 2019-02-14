@@ -41,3 +41,31 @@ unsigned priority_queue::element_count()
 {
     return top;
 }
+
+bool queue::is_empty()
+{
+    return !(bottom > top);
+}
+queue::queue()
+{
+    priority_queue();
+    bottom = 0;
+}
+void queue::enqueue(tree::node &a)
+{
+    alphabets[bottom++] = a;
+    if (bottom >= QUEUE_MAXSIZE)
+        bottom = 0;
+}
+tree::node queue::dequeue()
+{
+    if (is_empty())
+        return tree::node();
+
+    if (top >= (QUEUE_MAXSIZE - 1))
+    {
+        top = 0;
+        return alphabets[QUEUE_MAXSIZE - 1];
+    }
+    return alphabets[top++];
+}
