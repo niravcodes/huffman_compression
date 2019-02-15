@@ -133,3 +133,20 @@ huffman_code *generate_code(tree *t)
     }
     return code;
 }
+
+int encode_file(huffman_code *table, input_param options)
+{
+    ifstream in;
+    ofstream out;
+    in.open(options.input_file, ios::binary | ios::in);
+    out.open(options.output_file, ios::binary | ios::out);
+    char a;
+    //the bitmasking hell begins
+    for (unsigned i = 0; i < options.input_file_size; i++)
+    {
+        in >> a;
+        out << table[a].get_code(); //yea yea i know. :3 i need to implement a bitstream now :v been there done that
+    }
+    in.close();
+    out.close();
+}

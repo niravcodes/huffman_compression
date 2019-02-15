@@ -20,8 +20,6 @@ std::ostream &operator<<(std::ostream &os, const huffman_code &m); //for debug p
 
 tree *make_huffman_tree(input_param);
 huffman_code *generate_code(tree *);
-
-#include <fstream>
-unsigned *count_frequency(std::ifstream &, unsigned); //exposed for debugging
+int encode_file(huffman_code *, input_param);
 
 #endif

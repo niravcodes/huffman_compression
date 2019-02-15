@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <sys/stat.h>
 
 #include "param_parser.h"
 #include "help.h"
@@ -20,26 +19,22 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	//debug
-	ifstream in_file;
-	in_file.open(options.input_file, ios::binary | ios::in);
-	unsigned *ct = count_frequency(in_file, options.input_file_size);
-	//enddebug
-	tree *huffman_tree = make_huffman_tree(options);
-	huffman_code *huff_code = generate_code(huffman_tree);
-
-	for (int i = 0; i < 256; i++)
+	if (options.encode)
 	{
-		cout << i << "\t\t";
-		cout << setw(16) << print_bits<unsigned>(huff_code[i].get_code(), huff_code[i].get_size());
-		cout << "       ";
-		cout << huff_code[i];
-		cout << "\t\t\t\t";
-		cout << ct[i] << endl;
-	}
+		tree *huffman_tree = make_huffman_tree(options);
+		huffman_code *huff_code = generate_code(huffman_tree);
+		if (encode_file(huff_code, options) == 0)
+		{
+			//job done
+			cout << "file compressed" << endl;
+		}
 
-	delete ct;
-	delete huffman_tree;
-	delete huff_code;
+		delete huffman_tree;
+		delete huff_code;
+	}
+	else
+	{
+		cout << "in construction" << endl;
+	}
 	return 0;
 }
