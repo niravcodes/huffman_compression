@@ -31,13 +31,14 @@ inline unsigned bitstream::get_bit_offset()
 }
 bool bitstream::add_remainder(unsigned data, unsigned size)
 {
-    if (!remainder_size) //if remainder doesn't already exist
-    {
-        remainder_size = size;
-        remainder = data & ~(0xffu << (size));
-        return true;
-    }
-    return false;
+    //notice no checks. Yea, I don't care if remainder overflows
+    //because EVERY pack() has to if if(pack() > 0)d and flushed
+    //then reset.
+    //At least for now, that is. maybe I can code a lock mechanism
+    //in place later
+    remainder_size += size;
+    remainder = (remainder << size) | data & ~(0xffu << (size));
+    return true;
 }
 int bitstream::micropack(byte data, unsigned size)
 {
@@ -71,13 +72,40 @@ int bitstream::pack(unsigned data, unsigned bit_l)
         return micropack(data, bit_l);
     else
     { //time to chop unsigned to bytes
-        byte buff;
-        for (int i = 0; i < 4; i++)
+        int return_size = 0;
+        unsigned no_of_bytes = bit_l / 8;
+        unsigned unaligned_bits = bit_l % 8;
+        byte buff[4] = {0, 0, 0, 0};
+
+        for (unsigned i = 0; i < 4; i++)
         {
-            data = data >> (8 * i);
-            buff = (byte)data;
-            if (micropack(buff, bit_l - (8 * i)) >= 0) //if buffer has filled up
+            data = data >> (i * 8);
+            buff[i] = (byte)data;
+        }
+
+        int overflow = micropack(buff[no_of_bytes], unaligned_bits); // first push the MSB side
+        if (overflow > 0)
+        {
+            //didn't fit. Needs to be repacked
+            return_size = bit_l - overflow;
+            // add_remainder(buff[no_of_bytes--] >> (unaligned_bits - overflow), overflow);
+            for (int i = 0; i < no_of_bytes; i++)
             {
+                add_remainder(buff[no_of_bytes--], 8);
+            }
+            return return_size;
+        }
+        else
+        {
+            no_of_bytes--;
+
+            while (no_of_bytes)
+            {
+                overflow = micropack(buff[no_of_bytes--], 8);
+                if (overflow >= 0)
+                {
+                    return_size -= (8 * i - overflow);
+                }
             }
         }
     }
