@@ -28,5 +28,6 @@ int output_table(input_param);
 int output_code(input_param);
 
 huffman_code *reconstruct_code_from_ascii();
+void naive_decode(huffman_code *, input_param);
 
 #endif

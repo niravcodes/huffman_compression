@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
 	else
 	{
 		huffman_code *huff_code = reconstruct_code_from_ascii();
+		naive_decode(huff_code, options);
 	}
 
 	if (options.generate_code)
