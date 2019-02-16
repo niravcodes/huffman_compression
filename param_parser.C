@@ -1,3 +1,4 @@
+//TODO: make the input_param struct a class so that I don't have to change 20 places just to add a new option
 #include "param_parser.h"
 #include "help.h"
 #include <sys/stat.h>
@@ -6,11 +7,11 @@ input_param parse_options(unsigned char argc, char *argv[])
 {
     if (argc == 1)
     { //invalid
-        return {"", "", 0, true, 0, 0};
+        return {"", "", 0, true, 0, 0, 0};
     }
     else
     {
-        input_param options = {"", "a.out", true, false, false, false}; //default params
+        input_param options = {"", "a.out", true, false, false, false, false}; //default params
         for (unsigned i = 1; i <= argc; ++i)
         {
             if (argv[i] == string("-o"))
@@ -24,6 +25,8 @@ input_param parse_options(unsigned char argc, char *argv[])
                 options.encode = false;
             else if (argv[i] == string("-t"))
                 options.generate_table = true;
+            else if (argv[i] == string("-c"))
+                options.generate_code = true;
             else
             {
                 options.input_file = argv[i];

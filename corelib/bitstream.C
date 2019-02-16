@@ -1,13 +1,5 @@
 #include "bitstream.h"
 
-bitstream::bitstream()
-{
-    bitstream(DEFAULT_BUFFER_SIZE);
-    /* 
-    why does calling this function not set the buffer_size??? 
-    TODO: Investigate
-    */
-}
 bitstream::bitstream(unsigned buffersize)
 {
     buffer = new byte[buffersize];

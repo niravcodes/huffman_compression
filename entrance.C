@@ -34,32 +34,16 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		cout << "in construction" << endl;
+		huffman_code *huff_code = reconstruct_code_from_ascii();
 	}
 
+	if (options.generate_code)
+	{
+		output_code(options);
+	}
 	if (options.generate_table)
 	{
-		tree *huffman_tree = make_huffman_tree(options);
-		huffman_code *huff_code = generate_code(huffman_tree);
-
-		unsigned long file_size = 0;
-		unsigned *count = count_frequency(options);
-
-		cout << "Byte\t\t\tCode\t\t\tSize\t\t\tFrequency" << endl;
-		for (int i = 0; i < 256; i++)
-		{
-			cout << i << "\t\t\t";
-			cout << huff_code[i].get_code() << "\t\t\t";
-			cout << huff_code[i].get_size() << "\t\t\t";
-			cout << count[i] << endl;
-			file_size += count[i] * huff_code[i].get_size(); //frequency * code size
-		}
-		cout << "Resulting size in bytes: " << file_size / 8 << endl;
-		cout << "Resulting size in MB: " << file_size / (8 * 1024 * 1024) << "MB" << endl;
-
-		delete[] count;
-		delete huffman_tree;
-		delete huff_code;
+		output_table(options);
 	}
 	return 0;
 }

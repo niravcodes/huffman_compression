@@ -31,6 +31,14 @@ unsigned huffman_code::get_size() const
 {
     return size;
 }
+void huffman_code::set_code(unsigned in)
+{
+    code = in;
+}
+void huffman_code::set_size(unsigned in)
+{
+    size = in;
+}
 std::ostream &operator<<(std::ostream &os, const huffman_code &m)
 {
     return os << (unsigned)m.get_code() << "\t\t" << m.get_size();
@@ -149,15 +157,18 @@ int encode_file(huffman_code *table, input_param options)
     in.open(options.input_file, ios::binary | ios::in);
     out.open(options.output_file, ios::binary | ios::out);
     char a;
-    bitstream coded_buffer(1024 * 1024);
+    const int BIT_SIZE = 1024 * 1024;
+    bitstream coded_buffer(BIT_SIZE);
+    int mbs = 1;
+    unsigned long no_of_huff_bits = 0;
     for (unsigned long i = 0; i < options.input_file_size; i++)
     {
         in >> a;
+        no_of_huff_bits += table[a].get_size();
         if (!coded_buffer.pack(table[a].get_code(), table[a].get_size()))
         {
-            out.write((const char *)coded_buffer.flush_buffer(), 1024 * 1024);
+            out.write((const char *)coded_buffer.flush_buffer(), BIT_SIZE);
             coded_buffer.reset_buffer();
-            cout << "byte: " << i << endl;
         }
     }
     out.write((const char *)coded_buffer.flush_buffer(), coded_buffer.get_occupied_bytes());
@@ -165,7 +176,4 @@ int encode_file(huffman_code *table, input_param options)
     in.close();
     out.close();
     return 0;
-}
-int gen_table()
-{
 }

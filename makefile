@@ -7,9 +7,11 @@ all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C
 	g++ -c entrance.C -o .entrance
 	g++ -c param_parser.C -o .param_parser
 	g++ -c corelib/huffman.C -o .huffman
+	g++ -c corelib/huffman_output.C -o .huffman_o
+	g++ -c corelib/huffman_decode.C -o .huffman_d
 	g++ -c corelib/tree.C -o .tree
 	g++ -c corelib/bitstream.C -o .bitstream
-	g++ .help .entrance .param_parser .huffman .tree .bitstream -o huff
+	g++ .help .entrance .param_parser .huffman .tree .bitstream .huffman_o .huffman_d -o huff
 
 test:	all _build_for_test
 

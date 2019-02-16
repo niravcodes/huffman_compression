@@ -1,11 +1,10 @@
 #ifndef _BITSTREAM_H
 #define _BITSTREAM_H
 
-#define DEFAULT_BUFFER_SIZE 128 * 1024
 typedef unsigned char byte;
 class bitstream
 {
-private:
+protected:
   byte *buffer;
   unsigned buffer_size; //inbytes
   unsigned bit_pos;     //inbits
@@ -20,7 +19,6 @@ private:
   bool add_remainder(unsigned, unsigned);
 
 public:
-  bitstream();
   bitstream(unsigned);
   ~bitstream();
 
