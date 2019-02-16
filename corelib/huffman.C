@@ -4,6 +4,7 @@
 #include "huffman.h"
 #include "tree.h"
 #include "priority_queue.h"
+#include "bitstream.h"
 
 using namespace std;
 
@@ -141,11 +142,15 @@ int encode_file(huffman_code *table, input_param options)
     in.open(options.input_file, ios::binary | ios::in);
     out.open(options.output_file, ios::binary | ios::out);
     char a;
-    //the bitmasking hell begins
+    bitstream coded_buffer(128 * 1024);
     for (unsigned i = 0; i < options.input_file_size; i++)
     {
         in >> a;
-        out << table[a].get_code(); //yea yea i know. :3 i need to implement a bitstream now :v been there done that
+        if (!coded_buffer.pack(table[a].get_code(), table[a].get_size()))
+        {
+            out.write((const char *)coded_buffer.flush_buffer(), DEFAULT_BUFFER_SIZE);
+            coded_buffer.reset_buffer();
+        }
     }
     in.close();
     out.close();

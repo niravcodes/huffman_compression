@@ -6,6 +6,10 @@
 bitstream::bitstream()
 {
     bitstream(DEFAULT_BUFFER_SIZE);
+    /* 
+    why does calling this function not set the buffer_size??? 
+    TODO: Investigate
+    */
 }
 bitstream::bitstream(unsigned buffersize)
 {
@@ -16,7 +20,6 @@ bitstream::bitstream(unsigned buffersize)
     bit_pos = 0;
     remainder = 0;
     remainder_size = 0;
-    locked = false;
 }
 bitstream::~bitstream()
 {
@@ -83,9 +86,6 @@ int bitstream::micropack(byte data, unsigned size)
 
 bool bitstream::pack(unsigned data, unsigned bit_l)
 {
-    if (locked)
-        return false;
-
     if (bit_l > 32)
         return false;
     else
@@ -106,10 +106,10 @@ bool bitstream::pack(unsigned data, unsigned bit_l)
         {
             micropack(buff[--no_of_bytes], 8);
         }
-        locked = true;
-        return false;
     }
-    std::cout << bit_pos << std::endl;
+
+    if (remainder_size)
+        return false;
     return true;
 }
 int bitstream::reset_buffer()
@@ -122,6 +122,5 @@ int bitstream::reset_buffer()
     pack(remainder, remainder_size);
     remainder = 0;
     remainder_size = 0;
-    locked = false;
     return true;
 }

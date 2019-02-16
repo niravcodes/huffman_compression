@@ -13,8 +13,6 @@ private:
   unsigned remainder;
   unsigned remainder_size;
 
-  bool locked; // locked when buffer full
-
   inline unsigned get_byte_pos();
   inline unsigned get_bit_offset();
   inline unsigned get_free_bits();
