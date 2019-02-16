@@ -13,6 +13,8 @@ private:
   unsigned remainder;
   unsigned remainder_size;
 
+  bool locked; // locked when buffer full
+
   inline unsigned get_byte_pos();
   inline unsigned get_bit_offset();
   inline unsigned get_free_bits();
@@ -25,11 +27,12 @@ public:
   ~bitstream();
 
   //packs data into buffer upto specified size
-  //returns -1 if buffer overflow.
-  //0 if okay
-  int pack(unsigned, unsigned);
+  //returns true if okay
+  //returns false if the buffer has filled up
+  //if pack is false, flush then reset buffer
+  bool pack(unsigned, unsigned);
   //gives you a pointer to the buffer
-  byte *flush_buffer();
+  const byte *flush_buffer();
   //clears the buffer then packs remainder in
   int reset_buffer();
 };

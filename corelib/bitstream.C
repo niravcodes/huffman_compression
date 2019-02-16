@@ -16,12 +16,13 @@ bitstream::bitstream(unsigned buffersize)
     bit_pos = 0;
     remainder = 0;
     remainder_size = 0;
+    locked = false;
 }
 bitstream::~bitstream()
 {
     delete buffer;
 }
-byte *bitstream::flush_buffer()
+const byte *bitstream::flush_buffer()
 {
     return buffer;
 }
@@ -80,10 +81,13 @@ int bitstream::micropack(byte data, unsigned size)
     }
 }
 
-int bitstream::pack(unsigned data, unsigned bit_l)
+bool bitstream::pack(unsigned data, unsigned bit_l)
 {
+    if (locked)
+        return false;
+
     if (bit_l > 32)
-        return -1;
+        return false;
     else
     { //time to chop unsigned to bytes
         int return_size = 0;
@@ -102,7 +106,22 @@ int bitstream::pack(unsigned data, unsigned bit_l)
         {
             micropack(buff[--no_of_bytes], 8);
         }
+        locked = true;
+        return false;
     }
     std::cout << bit_pos << std::endl;
-    return 0;
+    return true;
+}
+int bitstream::reset_buffer()
+{
+    for (int i = 0; i < buffer_size; i++) //This is not necessary, but it helps me debug.
+    {
+        buffer[i] = 0;
+    }
+    bit_pos = 0;
+    pack(remainder, remainder_size);
+    remainder = 0;
+    remainder_size = 0;
+    locked = false;
+    return true;
 }

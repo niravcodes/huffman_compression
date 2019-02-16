@@ -25,6 +25,8 @@ int main()
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
     a.pack(0xff, 8);
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xaaffff, 23);
+    a.pack(0xaaaa, 32);
+    cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
+    a.reset_buffer();
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
 }
