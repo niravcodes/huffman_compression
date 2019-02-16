@@ -1,4 +1,8 @@
 #include "bitstream.h"
+//debug headers
+#include <iostream>
+#include "../debughelpers/bit_printer.h"
+
 bitstream::bitstream()
 {
     bitstream(DEFAULT_BUFFER_SIZE);
@@ -16,6 +20,10 @@ bitstream::bitstream(unsigned buffersize)
 bitstream::~bitstream()
 {
     delete buffer;
+}
+byte *bitstream::flush_buffer()
+{
+    return buffer;
 }
 inline unsigned bitstream::get_byte_pos()
 {
@@ -42,10 +50,16 @@ bool bitstream::add_remainder(unsigned data, unsigned size)
 }
 int bitstream::micropack(byte data, unsigned size)
 {
+    if (!size)
+        return 0; //needed for adding remainders w/pack(,)
+
     if (get_free_bits() >= size)
     {
-        data = data << (8 - size);                //move data so MSB is at 8th pos
+        std::cout << "micropack : " << print_bits(data, 8) << "  " << size << std::endl;
+        std::cout << "byte: " << get_byte_pos() << " bitoffset: " << get_bit_offset() << endl;
+
         byte buff = buffer[get_byte_pos()];       //copy last byte of buffer to modify
+        data = data << (8 - size);                //move data so MSB is at 8th pos
         buff = buff | (data >> get_bit_offset()); //pack input data's portion into buffer
         data = data << (8 - get_bit_offset());    //pack the rest of data on the next byte
 
@@ -56,10 +70,12 @@ int bitstream::micropack(byte data, unsigned size)
     }
     else
     {
+        std::cout << "needs to be put in remainder" << endl;
         unsigned r_size = size - get_free_bits();
         micropack(data >> (r_size), get_free_bits()); //micropack whatever fits
         bit_pos += get_free_bits();
         add_remainder(data, r_size);
+        std::cout << "remainder: " << print_bits(remainder, 32) << "  " << remainder_size << std::endl;
         return r_size;
     }
 }
@@ -68,8 +84,6 @@ int bitstream::pack(unsigned data, unsigned bit_l)
 {
     if (bit_l > 32)
         return -1;
-    else if (bit_l <= 8)
-        return micropack(data, bit_l);
     else
     { //time to chop unsigned to bytes
         int return_size = 0;
@@ -83,30 +97,12 @@ int bitstream::pack(unsigned data, unsigned bit_l)
             buff[i] = (byte)data;
         }
 
-        int overflow = micropack(buff[no_of_bytes], unaligned_bits); // first push the MSB side
-        if (overflow > 0)
+        micropack(buff[no_of_bytes], unaligned_bits); // first push the MSB side
+        while (no_of_bytes)
         {
-            //didn't fit. Needs to be repacked
-            return_size = bit_l - overflow;
-            // add_remainder(buff[no_of_bytes--] >> (unaligned_bits - overflow), overflow);
-            for (int i = 0; i < no_of_bytes; i++)
-            {
-                add_remainder(buff[no_of_bytes--], 8);
-            }
-            return return_size;
-        }
-        else
-        {
-            no_of_bytes--;
-
-            while (no_of_bytes)
-            {
-                overflow = micropack(buff[no_of_bytes--], 8);
-                if (overflow >= 0)
-                {
-                    return_size -= (8 * i - overflow);
-                }
-            }
+            micropack(buff[--no_of_bytes], 8);
         }
     }
+    std::cout << bit_pos << std::endl;
+    return 0;
 }
