@@ -35,3 +35,26 @@ string print_bits(T a, int size)
     }
     return bitpattern;
 }
+
+template <class T>
+string print_bit_array(T a, int size)
+{
+    bool bit;
+    string bitpattern = "";
+    unsigned char bye;
+    for (int i = 0; i < size / 8; i++)
+    {
+        bye = a[i];
+        for (int j = 0; j < 8; j++)
+        {
+            bit = bye & 0x80;
+            if (bit)
+                bitpattern = bitpattern + "1";
+            else
+                bitpattern = bitpattern + "0";
+            bye = bye << 1;
+        }
+        bitpattern += " ";
+    }
+    return bitpattern;
+}

@@ -1,4 +1,4 @@
-.PHONY : all _build_for_test
+.PHONY : all _build_for_test bs
 
 all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C 
 	@echo
@@ -12,6 +12,8 @@ all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C
 	g++ .help .entrance .param_parser .huffman .tree .bitstream -o huff
 
 test:	all _build_for_test
+
+testbs: all bs
 
 _build_for_test: tests/priority_queue.C tests/queue.C
 	@echo
@@ -38,8 +40,10 @@ runtestq:
 	tests/queue
 
 
-runtestq:
+bs:
 	@echo
 	@echo
 	@echo "Running Bitstream Test"
-	tests/bistream
+	g++ -c tests/bitstream.C -o tests/.bitstream
+	g++ tests/.bitstream .bitstream -o tests/bitstream
+	./tests/bitstream
