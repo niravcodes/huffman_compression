@@ -18,6 +18,7 @@ public:
 };
 std::ostream &operator<<(std::ostream &os, const huffman_code &m); //for debug purpose only
 
+unsigned *count_frequency(input_param);
 tree *make_huffman_tree(input_param);
 huffman_code *generate_code(tree *);
 int encode_file(huffman_code *, input_param);

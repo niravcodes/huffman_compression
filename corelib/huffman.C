@@ -35,7 +35,6 @@ std::ostream &operator<<(std::ostream &os, const huffman_code &m)
 {
     return os << (unsigned)m.get_code() << "\t\t" << m.get_size();
 }
-
 unsigned *count_frequency(ifstream &in, unsigned file_size)
 {
     char byte;
@@ -48,6 +47,14 @@ unsigned *count_frequency(ifstream &in, unsigned file_size)
         in >> byte;
         count[(unsigned char)byte]++;
     }
+    return count;
+}
+unsigned *count_frequency(input_param options)
+{
+    ifstream in_file;
+    in_file.open(options.input_file, ios::binary | ios::in);
+    unsigned *count = count_frequency(in_file, options.input_file_size);
+    in_file.close();
     return count;
 }
 priority_queue<tree::node> *generate_alphabets(unsigned *count)
@@ -161,17 +168,4 @@ int encode_file(huffman_code *table, input_param options)
 }
 int gen_table()
 {
-    ifstream in;
-    in.open(options.input_file, ios::binary | ios::in);
-    char a;
-    for (unsigned long i = 0; i < options.input_file_size; i++)
-    {
-        in >> a;
-        cout << "";
-    }
-    out.write((const char *)coded_buffer.flush_buffer(), coded_buffer.get_occupied_bytes());
-
-    in.close();
-    out.close();
-    return 0;
 }
