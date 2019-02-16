@@ -8,6 +8,7 @@ struct input_param
     bool encode;
     bool invalid;
     unsigned input_file_size;
+    bool generate_table;
 };
 input_param parse_options(unsigned char argc, char *argv[]);
 bool show_help_if_option_invalid(input_param);

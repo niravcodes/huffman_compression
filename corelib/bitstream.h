@@ -24,6 +24,8 @@ public:
   bitstream(unsigned);
   ~bitstream();
 
+  unsigned get_occupied_bytes();
+
   //packs data into buffer upto specified size
   //returns true if okay
   //returns false if the buffer has filled up

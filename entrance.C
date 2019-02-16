@@ -36,5 +36,18 @@ int main(int argc, char *argv[])
 	{
 		cout << "in construction" << endl;
 	}
+	if (options.generate_table)
+	{
+		tree *huffman_tree = make_huffman_tree(options);
+		huffman_code *huff_code = generate_code(huffman_tree);
+		if (gen_table(huff_code, options) == 0)
+		{
+			//job done
+			cout << "file compressed" << endl;
+		}
+
+		delete huffman_tree;
+		delete huff_code;
+	}
 	return 0;
 }

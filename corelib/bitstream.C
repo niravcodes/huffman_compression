@@ -1,7 +1,4 @@
 #include "bitstream.h"
-//debug headers
-#include <iostream>
-#include "../debughelpers/bit_printer.h"
 
 bitstream::bitstream()
 {
@@ -41,6 +38,10 @@ inline unsigned bitstream::get_bit_offset()
 {
     return bit_pos % 8;
 }
+unsigned bitstream::get_occupied_bytes()
+{
+    return get_byte_pos() + (get_bit_offset() > 0);
+}
 bool bitstream::add_remainder(unsigned data, unsigned size)
 {
     //notice no checks. Yea, I don't care if remainder overflows
@@ -59,9 +60,6 @@ int bitstream::micropack(byte data, unsigned size)
 
     if (get_free_bits() >= size)
     {
-        std::cout << "micropack : " << print_bits(data, 8) << "  " << size << std::endl;
-        std::cout << "byte: " << get_byte_pos() << " bitoffset: " << get_bit_offset() << endl;
-
         byte buff = buffer[get_byte_pos()];       //copy last byte of buffer to modify
         data = data << (8 - size);                //move data so MSB is at 8th pos
         buff = buff | (data >> get_bit_offset()); //pack input data's portion into buffer
@@ -74,12 +72,10 @@ int bitstream::micropack(byte data, unsigned size)
     }
     else
     {
-        std::cout << "needs to be put in remainder" << endl;
         unsigned r_size = size - get_free_bits();
         micropack(data >> (r_size), get_free_bits()); //micropack whatever fits
         bit_pos += get_free_bits();
         add_remainder(data, r_size);
-        std::cout << "remainder: " << print_bits(remainder, 32) << "  " << remainder_size << std::endl;
         return r_size;
     }
 }

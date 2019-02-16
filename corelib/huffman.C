@@ -142,16 +142,36 @@ int encode_file(huffman_code *table, input_param options)
     in.open(options.input_file, ios::binary | ios::in);
     out.open(options.output_file, ios::binary | ios::out);
     char a;
-    bitstream coded_buffer(128 * 1024);
-    for (unsigned i = 0; i < options.input_file_size; i++)
+    bitstream coded_buffer(1024 * 1024);
+    for (unsigned long i = 0; i < options.input_file_size; i++)
     {
         in >> a;
         if (!coded_buffer.pack(table[a].get_code(), table[a].get_size()))
         {
-            out.write((const char *)coded_buffer.flush_buffer(), DEFAULT_BUFFER_SIZE);
+            out.write((const char *)coded_buffer.flush_buffer(), 1024 * 1024);
             coded_buffer.reset_buffer();
+            cout << "byte: " << i << endl;
         }
     }
+    out.write((const char *)coded_buffer.flush_buffer(), coded_buffer.get_occupied_bytes());
+
     in.close();
     out.close();
+    return 0;
+}
+int gen_table()
+{
+    ifstream in;
+    in.open(options.input_file, ios::binary | ios::in);
+    char a;
+    for (unsigned long i = 0; i < options.input_file_size; i++)
+    {
+        in >> a;
+        cout << "";
+    }
+    out.write((const char *)coded_buffer.flush_buffer(), coded_buffer.get_occupied_bytes());
+
+    in.close();
+    out.close();
+    return 0;
 }
