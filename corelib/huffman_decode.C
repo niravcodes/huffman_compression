@@ -1,4 +1,5 @@
 #include "huffman.h"
+#include "../debughelpers/bit_printer.h"
 #include "../param_parser.h"
 #include <iostream>
 #include <string>
@@ -23,6 +24,7 @@ huffman_code *reconstruct_code_from_ascii()
     cin >> x;
     cout << x << endl;
     cin >> code;
+    cout << code << "file size in bits" << endl;
     huff_code[256].set_code(code); //no this no not code, this is the size of file in bits
     return huff_code;
 }
@@ -41,29 +43,41 @@ inline unsigned pack_bit(unsigned code, bool bit)
 void naive_decode(huffman_code *huff_code, input_param options)
 {
     unsigned char buffer;
-    unsigned code;
-    unsigned file_size_in_bits = huff_code[257].get_code();
+    unsigned code = 0;
+    unsigned code_size = 0;
+    unsigned file_size_in_bits = huff_code[256].get_code() - 1;
     ifstream in;
     ofstream out;
     in.open(options.input_file, ios::binary | ios::in);
     out.open(options.output_file, ios::binary | ios::out);
+    cout << "in naive_decode" << endl;
+
     for (unsigned long i = 0; i < options.input_file_size; i++)
     {
         in >> buffer;
         for (int j = 0; j < 8; j++)
         {
             code = (code << 1) | pluck_bit(buffer);
+            code_size++;
+            buffer = buffer << 1;
+            cout << "code : " << print_bits(code, 32) << endl;
+            cout << "buffer: " << print_bits(buffer, 8) << endl;
+
             for (int k = 0; k < 256; k++)
             {
-                if (code == huff_code[i].get_code())
+                cout << code << " " << code_size << "     " << huff_code[k].get_code() << "   " << huff_code[k].get_size() << endl;
+                if (code == huff_code[k].get_code() && code_size == huff_code[k].get_size())
                 {
+                    cout << "MATCH" << endl;
                     out << (unsigned char)k;
                     code = 0;
+                    code_size = 0;
+                    break;
                 }
             }
-            buffer = buffer << 1;
+            cout << endl;
 
-            if (file_size_in_bits--)
+            if (!file_size_in_bits--)
                 break;
         }
     }

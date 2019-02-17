@@ -1,4 +1,5 @@
 #include <iostream> //for debug only
+#include "../debughelpers/bit_printer.h"
 #include <fstream>
 
 #include "huffman.h"
@@ -151,12 +152,13 @@ huffman_code *generate_code(tree *t)
 }
 
 int encode_file(huffman_code *table, input_param options)
+//seems like there is a bug here, not in decoding
 {
     ifstream in;
     ofstream out;
     in.open(options.input_file, ios::binary | ios::in);
     out.open(options.output_file, ios::binary | ios::out);
-    char a;
+    unsigned char a;
     const int BIT_SIZE = 1024 * 1024;
     bitstream coded_buffer(BIT_SIZE);
     int mbs = 1;
@@ -164,6 +166,8 @@ int encode_file(huffman_code *table, input_param options)
     for (unsigned long i = 0; i < options.input_file_size; i++)
     {
         in >> a;
+        cout << "input bit : " << hex << print_bits(a, 16) << endl;
+        cout << "output bits : " << dec << print_bits(table[a].get_code(), 16) << endl;
         no_of_huff_bits += table[a].get_size();
         if (!coded_buffer.pack(table[a].get_code(), table[a].get_size()))
         {

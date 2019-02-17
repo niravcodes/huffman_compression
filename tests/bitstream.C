@@ -5,28 +5,21 @@ using namespace std;
 
 int main()
 {
-    bitstream a(8);
-    const int bit_size = 8 * 8;
+    bitstream a(4);
+    const int bit_size = 4 * 8;
     cout << "testing" << endl;
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0x55, 8);
+    a.pack(0x55, 15);
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xff, 6);
+    a.pack(0xff, 5);
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xaa, 8);
+    a.pack(0xaa, 10);
+
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xff, 8);
+    a.pack(0xffe, 12);
+    cout << "time for reaminder" << endl;
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0x00, 2);
-    cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xff, 8);
-    cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xff, 8);
-    cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xff, 8);
-    cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
-    a.pack(0xaaaa, 32);
-    cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
+
     a.reset_buffer();
     cout << print_bit_array(a.flush_buffer(), bit_size) << endl;
 }

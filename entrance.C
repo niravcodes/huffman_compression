@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 		if (encode_file(huff_code, options) == 0)
 		{
 			//job done
-			cout << "file compressed" << endl;
 		}
 
 		delete huffman_tree;
