@@ -1,4 +1,7 @@
 #include "huffman.h"
+
+//for debug
+#include "../debughelpers/bit_printer.h"
 #include <iostream>
 using namespace std;
 
@@ -19,8 +22,8 @@ int output_table(input_param options)
     {
         if (count[i])
         {
-            cout << i << "\t\t\t";
-            cout << huff_code[i].get_code() << "\t\t\t";
+            cout << hex << i << "\t\t\t";
+            cout << print_bits(huff_code[i].get_code(), 16) << "\t\t\t";
             cout << huff_code[i].get_size() << "\t\t\t";
             cout << count[i] << endl;
             file_size += count[i] * huff_code[i].get_size(); //frequency * code size

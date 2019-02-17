@@ -54,7 +54,7 @@ void naive_decode(huffman_code *huff_code, input_param options)
 
     for (unsigned long i = 0; i < options.input_file_size; i++)
     {
-        in >> buffer;
+        buffer = in.get();
         for (int j = 0; j < 8; j++)
         {
             code = (code << 1) | pluck_bit(buffer);
@@ -80,6 +80,10 @@ void naive_decode(huffman_code *huff_code, input_param options)
             if (!file_size_in_bits--)
                 break;
         }
+        // if (i % 1024)
+        // {
+        //     cout << i << "kb" << "\n";
+        // }
     }
     delete[] huff_code;
     in.close();

@@ -53,7 +53,7 @@ unsigned *count_frequency(ifstream &in, unsigned file_size)
 
     for (int i = 0; i < file_size; ++i)
     {
-        in >> byte;
+        byte = in.get();
         count[(unsigned char)byte]++;
     }
     return count;
@@ -165,14 +165,15 @@ int encode_file(huffman_code *table, input_param options)
     unsigned long no_of_huff_bits = 0;
     for (unsigned long i = 0; i < options.input_file_size; i++)
     {
-        in >> a;
-        cout << "input bit : " << hex << print_bits(a, 16) << endl;
-        cout << "output bits : " << dec << print_bits(table[a].get_code(), 16) << endl;
+        a = in.get();
+        // cout << "input bit : " << hex << (unsigned)a << endl;
+        // cout << "output bits : " << dec << print_bits(table[a].get_code(), 16) << endl;
         no_of_huff_bits += table[a].get_size();
         if (!coded_buffer.pack(table[a].get_code(), table[a].get_size()))
         {
             out.write((const char *)coded_buffer.flush_buffer(), BIT_SIZE);
             coded_buffer.reset_buffer();
+            // cout << mbs++ << "written" << endl;
         }
     }
     out.write((const char *)coded_buffer.flush_buffer(), coded_buffer.get_occupied_bytes());
