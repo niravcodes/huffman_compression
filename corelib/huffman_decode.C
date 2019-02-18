@@ -60,30 +60,28 @@ void naive_decode(huffman_code *huff_code, input_param options)
             code = (code << 1) | pluck_bit(buffer);
             code_size++;
             buffer = buffer << 1;
-            cout << "code : " << print_bits(code, 32) << endl;
-            cout << "buffer: " << print_bits(buffer, 8) << endl;
+            // cout << "code : " << print_bits(code, 32) << endl;
+            // cout << "buffer: " << print_bits(buffer, 8) << endl;
 
             for (int k = 0; k < 256; k++)
             {
-                cout << code << " " << code_size << "     " << huff_code[k].get_code() << "   " << huff_code[k].get_size() << endl;
+                // cout << code << " " << code_size << "     " << huff_code[k].get_code() << "   " << huff_code[k].get_size() << endl;
                 if (code == huff_code[k].get_code() && code_size == huff_code[k].get_size())
                 {
-                    cout << "MATCH" << endl;
+                    // cout << "MATCH" << endl;
                     out << (unsigned char)k;
                     code = 0;
                     code_size = 0;
                     break;
                 }
             }
-            cout << endl;
 
             if (!file_size_in_bits--)
                 break;
         }
-        // if (i % 1024)
-        // {
-        //     cout << i << "kb" << "\n";
-        // }
+        if (i % 1024)
+            cout << i << "kb"
+                 << "\n";
     }
     delete[] huff_code;
     in.close();
