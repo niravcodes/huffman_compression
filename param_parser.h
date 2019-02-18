@@ -10,6 +10,12 @@ struct input_param
     unsigned input_file_size;
     bool generate_table;
     bool generate_code;
+    bool verbose;
+
+    input_param() : input_file(""), output_file("a.huff"),
+                    encode(true), invalid(true),
+                    input_file_size(0), generate_table(false),
+                    generate_code(false), verbose(false) {}
 };
 input_param parse_options(unsigned char argc, char *argv[]);
 bool show_help_if_option_invalid(input_param);

@@ -17,21 +17,21 @@ int output_table(input_param options)
     unsigned long file_size = 0;
     unsigned *count = count_frequency(options);
 
-    cout << "Byte\t\t\tCode\t\t\tSize\t\t\tFrequency" << endl;
+    cout << "Byte\t\tCode\t\tSize\t\tFrequency" << endl;
     for (int i = 0; i < 256; i++)
     {
         if (count[i])
         {
-            cout << hex << i << "\t\t\t";
-            cout << print_bits(huff_code[i].get_code(), 16) << "\t\t\t";
-            cout << huff_code[i].get_size() << "\t\t\t";
+            cout << hex << i << dec << "\t\t";
+            cout << print_bits(huff_code[i].get_code(), 16) << "\t\t";
+            cout << huff_code[i].get_size() << "\t\t";
             cout << count[i] << endl;
             file_size += count[i] * huff_code[i].get_size(); //frequency * code size
         }
     }
     cout << "Resulting size in bits: " << file_size << endl;
     cout << "Resulting size in bytes: " << file_size / 8 << endl;
-    cout << "Resulting size in MB: " << file_size / (8 * 1024 * 1024) << "MB" << endl;
+    cout << "Resulting size in MB: " << (float)file_size / (8 * 1024 * 1024) << "MB" << endl;
 
     delete[] count;
     delete huffman_tree;

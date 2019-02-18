@@ -3,6 +3,7 @@
 #include "../param_parser.h"
 #include "tree.h"
 
+const char _MAGIC_BYTES[] = {'n', 'i', 'r', 'a', 'v', '.', 'c', 'o', 'm', '.', 'n', 'p'};
 class huffman_code
 {
 private:
@@ -29,5 +30,6 @@ int output_code(input_param);
 
 huffman_code *reconstruct_code_from_ascii();
 void naive_decode(huffman_code *, input_param);
+int naive_decode_with_header(input_param options);
 
 #endif
