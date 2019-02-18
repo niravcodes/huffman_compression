@@ -49,3 +49,8 @@ bs:
 	g++ -c tests/bitstream.C -o tests/.bitstream
 	g++ tests/.bitstream .bitstream -o tests/bitstream
 	./tests/bitstream
+
+clean:
+	@echo
+	@echo "Cleaning up the binaries"
+	rm .bitstream .help .huff .huffman* .priority_queue .param_parser .tree .tree_printer .entrance
