@@ -53,6 +53,8 @@ input_param parse_options(unsigned char argc, char *argv[])
 
         //return the parsed options
         options.invalid = false;
+        if (!options.encode && options.output_file == "a.huff")
+            options.output_file = "a.dhuff";
         return options;
     }
 }
