@@ -11,7 +11,8 @@ all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C
 	g++ -g -c corelib/huffman_decode.C -o .huffman_d
 	g++ -g -c corelib/tree.C -o .tree
 	g++ -g -c corelib/bitstream.C -o .bitstream
-	g++ .help .entrance .param_parser .huffman .tree .bitstream .huffman_o .huffman_d -o huff
+	g++ -g -c corelib/bitqueue.C -o .bitqueue
+	g++ .help .entrance .param_parser .huffman .tree .bitstream .bitqueue .huffman_o .huffman_d -o huff
 
 test:	all _build_for_test
 
@@ -28,6 +29,15 @@ _build_for_test: tests/priority_queue.C tests/queue.C
 	g++ tests/.priority_queue .tree -o tests/priority_queue
 	g++ tests/.queue .tree -o tests/queue
 	g++ tests/.bitstream .bitstream -o tests/bitstream
+
+testbitq:
+	@echo
+	@echo
+	@echo "Testing Bitqueue"
+	g++ -g -c corelib/bitqueue.C -o .bitqueue
+	g++ -g -c tests/bitqueue.C -o tests/.bitqueue
+	g++ tests/.bitqueue .bitqueue -o tests/bitqueue
+	tests/bitqueue
 
 runtestpq:
 	@echo
@@ -53,4 +63,4 @@ bs:
 clean:
 	@echo
 	@echo "Cleaning up the binaries"
-	rm .bitstream .help .huff .huffman* .priority_queue .param_parser .tree .tree_printer .entrance
+	rm .bitstream .help .huff .huffman* .priority_queue .param_parser .tree .bitqueue .tree_printer .entrance
