@@ -110,12 +110,12 @@ To clean the source directory, type
 
 **The codebase could use some refactoring** - As it currently stands, the codebase could has some over-engineered parts and some lousily written portions. There are minor issues code duplication, some redundancies, some architectural issues, some lazily written code and some algorithms that could be subtituted for better ones without any loss in readability.
 
-## Vague plans
+## <s>Vague plans</s>
 1. <s>Compress folders.</s> (tar before or after compression, no biggie)
 2. Try to mix with some other simple compression algorithms like RLE and compare efficiency.
 3. Try various approaches to decoding Huffman
 
 ## Progess
-Released version 1.0.0 with basic compression and decompression. Plans to optimise, refactor and benchmark.
+<s>Released version 1.0.0 with basic compression and decompression. Plans to optimise, refactor and benchmark.</s> All plans are cancelled. As it stands, the program will do basic huffman encoding and decoding for you. But that's about it.
 
-More on [nirav.com.np](https://nirav.com.np)
+More  on [nirav.com.np](https://nirav.com.np)
