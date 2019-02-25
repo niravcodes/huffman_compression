@@ -1,4 +1,7 @@
 # Huffman Compression Program
+
+[![Build Status](https://travis-ci.org/niravcodes/huffman_compression.svg?branch=master)](https://travis-ci.org/niravcodes/huffman_compression)
+
 The implementation of the Huffman algorithm as a command line utility. Huffman coding is an entropy compression algorithm which essentially formalizes and presents an implementation for the basic idea that higher probability alphabets should be encoded with shorter codes. Huffman codes are variable length prefix code i.e. no two codes start with the same bit pattern. {10, 101, 10110} would be an invalid set of codes while {0, 10, 110, 1110} would be valid.
 
 ## Usage
