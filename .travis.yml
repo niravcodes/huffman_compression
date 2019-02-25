@@ -15,3 +15,5 @@ matrix:
                 - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
         before_install:
             - eval "${MATRIX_EVAL}"
+        install:
+            - "export CXX=g++-6"
