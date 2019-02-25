@@ -1,2 +1,10 @@
 language: cpp
 script: make
+addons:
+        apt:
+                sources:
+                        - ubuntu-toolchain-r-test
+                packages:
+                        - g++-6
+                env:
+                        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
