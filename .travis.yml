@@ -1,10 +1,14 @@
 language: cpp
-script: make
 git:
     depth: 2
     quiet: true
-matrix:
+job:
     include: 
+        - stage: Build
+          script: make
+        - stage: Test
+          script: ./test.sh
+
         addons:
             apt:
                 sources:
@@ -15,5 +19,6 @@ matrix:
                 - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
         before_install:
             - eval "${MATRIX_EVAL}"
+            - "chmod +x test.sh"
         install:
             - "export CXX=g++-6"
