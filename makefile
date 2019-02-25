@@ -3,15 +3,15 @@
 all: help.C entrance.C param_parser.C corelib/huffman.C corelib/tree.C 
 	@echo
 	@echo "Building normal programs"
-	g++ -c help.C -o .help
-	g++ -c entrance.C -o .entrance
-	g++ -c param_parser.C -o .param_parser
-	g++ -c corelib/huffman.C -o .huffman
-	g++ -c corelib/huffman_output.C -o .huffman_o
-	g++ -c corelib/huffman_decode.C -o .huffman_d
-	g++ -c corelib/tree.C -o .tree
-	g++ -c corelib/bitstream.C -o .bitstream
-	g++ .help .entrance .param_parser .huffman .tree .bitstream .huffman_o .huffman_d -o huff
+	$(CXX) -c help.C -o .help
+	$(CXX) -c entrance.C -o .entrance
+	$(CXX) -c param_parser.C -o .param_parser
+	$(CXX) -c corelib/huffman.C -o .huffman
+	$(CXX) -c corelib/huffman_output.C -o .huffman_o
+	$(CXX) -c corelib/huffman_decode.C -o .huffman_d
+	$(CXX) -c corelib/tree.C -o .tree
+	$(CXX) -c corelib/bitstream.C -o .bitstream
+	$(CXX) .help .entrance .param_parser .huffman .tree .bitstream .huffman_o .huffman_d -o huff
 
 test:	all _build_for_test
 
