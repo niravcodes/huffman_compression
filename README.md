@@ -4,6 +4,8 @@
 
 The implementation of the Huffman algorithm as a command line utility. Huffman coding is an entropy compression algorithm which essentially formalizes and presents an implementation for the basic idea that higher probability alphabets should be encoded with shorter codes. Huffman codes are variable length prefix code i.e. no two codes start with the same bit pattern. {10, 101, 10110} would be an invalid set of codes while {0, 10, 110, 1110} would be valid.
 
+Read detailed blog post at [**the corresponding post**](https://nirav.com.np/2019/02/14/writing-huffman-compression-in-cpp.html) on my blog.
+
 ## Usage
 Usage: huff [options] input_file  
 
@@ -81,6 +83,7 @@ Download the codebase with the git clone command.
 Build with the make command.
 
 > cd huffman_compression
+
 > make
 
 The program "huff" should appear in the main directory. Try
